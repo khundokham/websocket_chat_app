@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+// လိုအပ်သော Widget များကို Import လုပ်ရန်
+// import 'chat_messages_widget.dart'; 
+// import 'chat_input_widget.dart';
+
+class ChatScreen extends StatelessWidget {
+  // လက်ရှိ chat room နဲ့ user ID တွေကို သတ်မှတ်ပေးဖို့ လိုအပ်သည်
+  final String chatId;
+  final String currentUserId;
+  final String chatPartnerName; // ဥပမာ - 'Alice'
+
+  const ChatScreen({
+    super.key,
+    required this.chatId,
+    required this.currentUserId,
+    required this.chatPartnerName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // 1. App Bar (အပေါ်ပိုင်း)
+      appBar: AppBar(
+        title: Text(chatPartnerName), // Chat လုပ်နေသူရဲ့ နာမည်ကို ပြသ
+      ),
+      
+      // 2. Body (အလယ်ပိုင်းနှင့် အောက်ပိုင်း)
+      body: Column(
+        children: <Widget>[
+          // အလယ်ပိုင်း: မက်ဆေ့ချ်စာရင်းကို ပြသပြီး၊ ကျန်တဲ့ နေရာအကုန်ယူရန် Expanded သုံးသည်
+          Expanded(
+            child: ChatMessagesWidget(
+              chatId: chatId,
+              currentUserId: currentUserId,
+            ),
+          ),
+          
+          // အောက်ပိုင်း: စာရိုက်ထည့်တဲ့ နေရာ (အမြဲတမ်း အောက်ဆုံးမှာ ရှိနေစေရန်)
+          ChatInputWidget(
+            chatId: chatId,
+            currentUserId: currentUserId,
+          ),
+          
+          // ကီးဘုတ်ပေါ်လာရင် နေရာလွတ်ပေးဖို့ SafeArea ထည့်နိုင်သည်
+          const SafeArea(child: SizedBox.shrink()),
+        ],
+      ),
+    );
+  }
+}
